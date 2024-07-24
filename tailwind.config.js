@@ -2,8 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#306CFE",
+      },
+      fontFamily: {
+        sans: ["Potta One", "Yusei Magic"],
+      },
+    },
   },
   plugins: [],
 };
-
