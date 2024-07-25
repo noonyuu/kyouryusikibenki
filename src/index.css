@@ -12,4 +12,6 @@
 body {
   min-height: 100svh;
   max-width: 100svw;
+  background-image: url(/src/assets/back-image.webp);
+  background-size: cover;
 }
