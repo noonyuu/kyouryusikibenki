@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+  benki:
+    container_name: benki
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: benki-image:latest
+    command: air
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    tty: true
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:
