@@ -38,6 +38,15 @@ services:
     tty: true
     extra_hosts:
       - host.docker.internal:host-gateway
+  
+  linebot:
+    build:
+      context: ./linebot
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "3012:3012"
 
 volumes:
   mongodb_data:
