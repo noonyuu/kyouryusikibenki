@@ -74,26 +74,31 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
 						return
 					}
+
 					data := map[string]string{
 						"word": message.Text,
-						"day":  time.Now().Format(time.DateTime),
+						"day":  time.Now().Format(time.RFC3339),
 					}
+
 					jsonData, err := json.Marshal(data)
 					if err != nil {
-						fmt.Println("Error marshalling JSON:", err)
+						log.Printf("Error marshalling JSON: %v", err)
 						return
 					}
-					// https://benki.noonyuu.com/app/v1/word-listにデータを入れる
+
 					client := &http.Client{}
 					req, err := http.NewRequest("POST", "https://benki.noonyuu.com/app/v1/word-list", bytes.NewBuffer(jsonData))
 					if err != nil {
-						log.Fatal(err)
+						log.Printf("Error creating request: %v", err)
+						return
 					}
-					req.Header.Set("key", "83478174581347835789132478103574")
+
+					req.Header.Set("Content-Type", "application/json")
+					req.Header.Set("key", os.Getenv("key"))
 					resp, err := client.Do(req)
 					if err != nil {
 						log.Fatal(err)
