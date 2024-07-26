@@ -3,7 +3,7 @@ import { Drawer } from "vaul";
 import { Card } from "./card";
 
 interface CardDate {
-  day: Date;
+  day: string;
   image: string;
   person: number;
 }
@@ -13,38 +13,38 @@ export const BottomSheet = () => {
 
   const cardDate: CardDate[] = [
     {
-      day: new Date("7 25 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-25",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 24 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-24",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 23 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-23",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 22 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-22",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 21 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-21",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 20 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-20",
+      image: "/assets/back-image.webp",
       person: 3,
     },
     {
-      day: new Date("7 19 2024"),
-      image: "../../../src/assets/back-image.webp",
+      day: "2024-07-19",
+      image: "/assets/back-image.webp",
       person: 3,
     },
   ];
@@ -77,7 +77,7 @@ export const BottomSheet = () => {
         <Drawer.Portal>
           <Drawer.Overlay className="fixed inset-0 bg-black/40" />
           <Drawer.Content className="fixed bottom-0 left-0 right-0 mt-24 flex h-[96%] flex-col rounded-t-[10px] bg-zinc-100">
-            <div className="from-gradation-s/20 to-gradation-e/20 flex-1 rounded-t-[10px] bg-gradient-to-bl via-primary p-4">
+            <div className="flex-1 rounded-t-[10px] bg-gradient-to-bl from-gradation-s/20 via-primary to-gradation-e/20 p-4">
               <div className="w-full border-b border-white/20">
                 <div
                   className="mx-auto mb-2 h-1.5 w-12 flex-shrink-0 rounded-full bg-zinc-300"
