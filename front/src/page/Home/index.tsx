@@ -11,7 +11,12 @@ export const Home: React.FC = () => {
     if (isFirstRender) {
       return;
     }
-    fetch("https://localhost:8443/app/v1/word-list")
+    fetch("http://localhost:8443/app/v1/word-list", {
+      method: "GET",
+      headers: {
+        "key": "83478174581347835789132478103574"
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw new Error("Network response was not ok");
@@ -21,6 +26,7 @@ export const Home: React.FC = () => {
       .then((data) => {
         const words = data.map((item: { Word: string }) => item.Word);
         setWordList(words);
+        console.log("wordList", words);
       })
       .catch((error) => {
         console.error("There was a problem with the fetch operation:", error);
