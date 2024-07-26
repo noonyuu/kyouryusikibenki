@@ -11,10 +11,11 @@ export const Home: React.FC = () => {
     if (isFirstRender) {
       return;
     }
+
     fetch("http://localhost:8443/app/v1/word-list", {
       method: "GET",
       headers: {
-        "key": "83478174581347835789132478103574"
+        key: import.meta.env.VITE_APP_KEY,
       },
     })
       .then((res) => {
