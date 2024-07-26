@@ -1,10 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -70,20 +74,39 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					// CallAIを呼び出し、その結果をaiResponseに代入
-					// aiResponse, err := CallAI(message.Text)
-					// if err != nil {
-					// 	log.Print(err)
-					// 	aiResponse = linebot.TextMessage{Text: message.Text}
-					// }
-					fmt.Println("78")
-					// aiResponseのTextフィールドの内容を新しいテキストメッセージとして送信
 					if _, err = bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
 						log.Print(err)
+						return
 					}
-					// テキストメッセージに対する返信
+					data := map[string]string{
+						"word": message.Text,
+						"day":  time.Now().Format(time.DateTime),
+					}
+					jsonData, err := json.Marshal(data)
+					if err != nil {
+						fmt.Println("Error marshalling JSON:", err)
+						return
+					}
+					// https://benki.noonyuu.com/app/v1/word-listにデータを入れる
+					client := &http.Client{}
+					req, err := http.NewRequest("POST", "https://benki.noonyuu.com/app/v1/word-list", bytes.NewBuffer(jsonData))
+					if err != nil {
+						log.Fatal(err)
+					}
+					req.Header.Set("key", "83478174581347835789132478103574")
+					resp, err := client.Do(req)
+					if err != nil {
+						log.Fatal(err)
+					}
+					defer resp.Body.Close()
+					fmt.Println(resp.Status)
+					b, err := ioutil.ReadAll(resp.Body)
+					if err != nil {
+						log.Fatal(err)
+					}
+					fmt.Printf("%s", b)
+
 				case *linebot.StickerMessage:
-					log.Print("Received StickerMessage")
 					// スタンプメッセージに対する返信
 					replyMessage := linebot.NewTextMessage("スタンプを送らないで...")
 					if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
