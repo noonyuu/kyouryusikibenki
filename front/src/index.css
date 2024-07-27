@@ -14,3 +14,10 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}

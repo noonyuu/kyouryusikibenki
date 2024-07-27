@@ -1,18 +1,19 @@
 import { BottomSheet } from "@/component/BottomSheet";
 import { Header } from "@/component/Header";
-import RandomText from "@/component/RandomText";
 import React, { useEffect } from "react";
+import ThreeScene from "@/animation/ThreeScene";
 
 export const Home: React.FC = () => {
   const [wordList, setWordList] = React.useState<string[]>([]);
   const [isFirstRender, setIsFirstRender] = React.useState(false);
+  const [textData, setTextData] = React.useState<{ content: string }[]>([]);
 
   useEffect(() => {
     if (isFirstRender) {
       return;
     }
 
-    fetch("http://localhost:8443/app/v1/word-list", {
+    fetch("https://benki.noonyuu.com/app/v1/word-list", {
       method: "GET",
       headers: {
         key: import.meta.env.VITE_APP_KEY,
@@ -35,14 +36,17 @@ export const Home: React.FC = () => {
     setIsFirstRender(true);
   }, [isFirstRender]);
 
+  useEffect(() => {
+    const textData = wordList.map((word) => ({
+      content: word,
+    }));
+    setTextData(textData);
+  }, [wordList]);
+
   return (
     <>
       <Header />
-      <main className="relative h-[calc(100vh_-_64px_-_64px)] w-screen">
-        {wordList.map((text, index) => (
-          <RandomText key={index} text={text} />
-        ))}
-      </main>
+      <ThreeScene textData={textData} />
       <BottomSheet />
     </>
   );
