@@ -5,3 +5,4 @@ dist
 /minio/data
 .DS_Store
 /uploads
+/.aws
