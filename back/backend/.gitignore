@@ -4,3 +4,4 @@ dist
 .env
 /minio/data
 .DS_Store
+/uploads
