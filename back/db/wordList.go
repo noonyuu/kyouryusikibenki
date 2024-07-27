@@ -30,3 +30,10 @@ func (db *Database) GetWordList() ([]WordList, error) {
 	}
 	return words, nil
 }
+
+// 削除
+func (db *Database) DeleteWordList() error {
+	collection := db.client.Database("words").Collection("word-list")
+	_, err := collection.DeleteOne(context.TODO(), bson.D{{"word", word}})
+	return err
+}

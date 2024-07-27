@@ -18,6 +18,7 @@ func NewWordList(database *db.Database) *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/word-list", handler.CreateWordList).Methods("POST")
 	router.HandleFunc("/v1/word-list", handler.GetWordList).Methods("GET")
+	router.HandleFunc("/v1/word-list", handler.DeleteWordList).Methods("DELETE")
 
 	return router
 }
@@ -51,4 +52,25 @@ func (h *WordListHandler) GetWordList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	json.NewEncoder(w).Encode(wordList)
+}
+
+func (h *WordListHandler) DeleteWordList(w http.ResponseWriter, r *http.Request) {
+	// ヘッダーにkeyが存在するかを確認
+	key := r.Header.Get("key")
+	if key != os.Getenv("key") {
+		http.Error(w, "Forbidden: Missing testkey", http.StatusForbidden)
+		return
+	}
+
+	var word db.WordList
+	if err := json.NewDecoder(r.Body).Decode(&word); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	if err := h.DB.DeleteWordList(word.Word); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.WriteHeader(http.StatusNoContent)
 }
