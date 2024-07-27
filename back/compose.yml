@@ -1,0 +1,52 @@
+version: "3"
+
+services:
+  benki:
+    container_name: benki
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: benki-image:latest
+    command: air
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/app
+    tty: true
+    environment:
+      - DB_URI=mongodb://mongodb:27017
+    depends_on:
+      - mongodb
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  nginx:
+    restart: always
+    image: nginx:latest
+    ports:
+      - "8443:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ../front/dist:/var/www
+      - ./nginx/static:/etc/nginx/static
+      - ./nginx/keys:/etc/nginx/keys
+    tty: true
+    extra_hosts:
+      - host.docker.internal:host-gateway
+  
+  linebot:
+    build:
+      context: ./linebot
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "3012:3012"
+
+volumes:
+  mongodb_data:
