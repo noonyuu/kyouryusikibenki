@@ -1,15 +1,45 @@
 import { BottomSheet } from "@/component/BottomSheet";
 import { Header } from "@/component/Header";
 import RandomText from "@/component/RandomText";
-import React from "react";
+import React, { useEffect } from "react";
 
 export const Home: React.FC = () => {
-  const texts = ["Hello", "World", "Random", "Text", "React", "TypeScript"];
+  const [wordList, setWordList] = React.useState<string[]>([]);
+  const [isFirstRender, setIsFirstRender] = React.useState(false);
+
+  useEffect(() => {
+    if (isFirstRender) {
+      return;
+    }
+
+    fetch("http://localhost:8443/app/v1/word-list", {
+      method: "GET",
+      headers: {
+        key: import.meta.env.VITE_APP_KEY,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        const words = data.map((item: { Word: string }) => item.Word);
+        setWordList(words);
+        console.log("wordList", words);
+      })
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+    setIsFirstRender(true);
+  }, [isFirstRender]);
+
   return (
     <>
       <Header />
       <main className="relative h-[calc(100vh_-_64px_-_64px)] w-screen">
-        {texts.map((text, index) => (
+        {wordList.map((text, index) => (
           <RandomText key={index} text={text} />
         ))}
       </main>
