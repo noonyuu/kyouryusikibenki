@@ -61,14 +61,7 @@ func (h *WordListHandler) DeleteWordList(w http.ResponseWriter, r *http.Request)
 		http.Error(w, "Forbidden: Missing testkey", http.StatusForbidden)
 		return
 	}
-
-	var word db.WordList
-	if err := json.NewDecoder(r.Body).Decode(&word); err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	if err := h.DB.DeleteWordList(word.Word); err != nil {
+	if err := h.DB.DeleteWordList(); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
