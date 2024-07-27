@@ -1,12 +1,11 @@
 import { BottomSheet } from "@/component/BottomSheet";
 import { Header } from "@/component/Header";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import ThreeScene from "@/animation/ThreeScene";
 
 export const Home: React.FC = () => {
-  const [wordList, setWordList] = React.useState<string[]>([]);
   const [isFirstRender, setIsFirstRender] = React.useState(false);
-  const [textData, setTextData] = React.useState<{ content: string }[]>([]);
+  const [fetchedWordList, setFetchedWordList] = React.useState<string[]>([]);
 
   useEffect(() => {
     if (isFirstRender) {
@@ -27,7 +26,7 @@ export const Home: React.FC = () => {
       })
       .then((data) => {
         const words = data.map((item: { Word: string }) => item.Word);
-        setWordList(words);
+        setFetchedWordList(words);
         console.log("wordList", words);
       })
       .catch((error) => {
@@ -36,16 +35,17 @@ export const Home: React.FC = () => {
     setIsFirstRender(true);
   }, [isFirstRender]);
 
-  useEffect(() => {
-    const textData = wordList.map((word) => ({
+  const wordList = useMemo(() => fetchedWordList, [fetchedWordList]);
+
+  const textData = useMemo(() => {
+    return wordList.map((word) => ({
       content: word,
     }));
-    setTextData(textData);
   }, [wordList]);
 
   return (
     <>
-      <Header />
+      <Header wordList={wordList} />
       <ThreeScene textData={textData} />
       <BottomSheet />
     </>
