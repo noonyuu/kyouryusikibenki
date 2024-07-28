@@ -1,9 +1,10 @@
 import { cdate } from "cdate";
 import { load } from "ts-dotenv";
-import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { GetObjectAclCommand, GetObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { fromIni } from "@aws-sdk/credential-providers";
 import { Upload } from "@aws-sdk/lib-storage";
 import fs from "fs";
+import { Get } from "routing-controllers";
 
 const env = load({
   BUCKET_NAME: String,
@@ -50,5 +51,30 @@ const uploadMain = async (filePath: string, fileName: string) => {
     throw error; // エラーを再スローして呼び出し元にエラーを伝える
   }
 };
+const downLoadObject = async (key: string) => {
+  try {
+    const getObjectParams = new GetObjectCommand({
+      Bucket: env.BUCKET_NAME,
+      Key: key,
+    });
+    const result = await s3Client.send(getObjectParams);
+    // console.log("ダウンロード完了", result);
+    return result;
+  } catch (error) {
+    console.error("ダウンロード失敗", error);
+    throw error; // エラーを再スローして呼び出し元にエラーを伝える
+  }
+};
 
-export default uploadMain;
+// ダウンロード処理のメイン関数
+const downloadMain = async (filePath: string) => {
+  try {
+    console.log("Starting download process");
+    return await downLoadObject(filePath);
+  } catch (error) {
+    console.error("Error during download process:", error);
+    throw error; // エラーを再スローして呼び出し元にエラーを伝える
+  }
+};
+
+export { uploadMain, downloadMain };
