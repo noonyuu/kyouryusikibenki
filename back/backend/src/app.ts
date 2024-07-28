@@ -8,7 +8,7 @@ import { downloadMain, uploadMain } from "./routes/minio";
 import { GetObjectAclCommandOutput, GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { Readable } from "stream";
 import { fromIni } from "@aws-sdk/credential-providers";
-import { PostDate } from "./routes/post";
+import { GetDate, PostDate } from "./routes/post";
 
 require("dotenv").config();
 const app = express();
@@ -103,9 +103,17 @@ app.post("/upload", upload.single("image"), async (req, res) => {
 
 app.get("/get", async (req, res) => {
   try {
-    const { date } = req.query;
-    if (!date) {
-      res.status(400).send("Error: Date query parameter is required");
+    const date = req.query.date;
+    console.log("Date:", date);
+    if (typeof date !== "string") {
+      res.status(400).send("Error: Date query parameter is required and must be a string");
+      return;
+    }
+
+    const key = await GetDate(req, date);
+    console.log("Key:", key);
+    if (!key) {
+      res.status(404).send("Error: No image found for the given date");
       return;
     }
 
@@ -120,7 +128,7 @@ app.get("/get", async (req, res) => {
     const result = await s3.send(
       new GetObjectCommand({
         Bucket: process.env.BUCKET_NAME,
-        Key: "1722128612330-85eb1g-carrot.png",
+        Key: key,
       })
     );
 
@@ -131,7 +139,6 @@ app.get("/get", async (req, res) => {
     }
 
     const readableObj = result.Body as Readable;
-
     const contentType = result.ContentType || "image/png";
 
     res.setHeader("Content-Type", contentType);
@@ -152,6 +159,7 @@ app.get("/get", async (req, res) => {
     res.status(500).send("Error processing request");
   }
 });
+
 
 console.log("Hello World!!!");
 // 404エラーハンドリング

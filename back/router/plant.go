@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/noonyuu/benki/back/db"
@@ -18,6 +19,7 @@ func NewPlant(database *db.Database) *mux.Router {
 	router := mux.NewRouter()
 	// router.HandleFunc("/v1/plant", handler.CreatePlant).Methods("POST")
 	router.HandleFunc("/v1/plant", handler.GetPlant).Methods("GET")
+	router.HandleFunc("/v1/plant/all", handler.GetPlants).Methods("GET")
 	router.HandleFunc("/v1/plant", handler.DeletePlant).Methods("DELETE")
 	router.HandleFunc("/v1/plant", handler.UpsertPlant).Methods("POST")
 
@@ -47,12 +49,41 @@ func (h *PlantHandler) CreatePlant(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *PlantHandler) GetPlant(w http.ResponseWriter, r *http.Request) {
-	plant, err := h.DB.GetPlant()
+	dateStr := r.URL.Query().Get("date")
+	if dateStr == "" {
+		http.Error(w, "Date query parameter is required", http.StatusBadRequest)
+		return
+	}
+
+	date, err := time.Parse("2006-01-02T15:04:05Z", dateStr)
+	if err != nil {
+		http.Error(w, "Invalid date format", http.StatusBadRequest)
+		return
+	}
+
+	plant, err := h.DB.GetPlant(date)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	if plant == nil {
+		http.Error(w, "No plant found for the given date", http.StatusNotFound)
+		return
+	}
+
 	json.NewEncoder(w).Encode(plant)
+}
+
+// 全件取得
+func (h *PlantHandler) GetPlants(w http.ResponseWriter, r *http.Request) {
+	plants, err := h.DB.GetPlants()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	json.NewEncoder(w).Encode(plants)
 }
 
 func (h *PlantHandler) DeletePlant(w http.ResponseWriter, r *http.Request) {
@@ -82,6 +113,9 @@ func (h *PlantHandler) UpsertPlant(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	// `day`フィールドを2006-01-02T15:04:05Zから2006-01-02形式に変換
+	plant.Day = plant.Day.Truncate(24 * time.Hour)
 
 	if err := h.DB.UpsertPlant(&plant); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

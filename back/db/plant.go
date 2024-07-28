@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -14,22 +15,50 @@ func (db *Database) CreatePlant(plant *Plant) error {
 	return err
 }
 
-func (db *Database) GetPlant() ([]Plant, error) {
+func (db *Database) GetPlant(date time.Time) (*Plant, error) {
 	collection := db.client.Database("plants").Collection("plant")
+
+	// 日付の範囲を設定（1日のみを対象）
+	startOfDay := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
+	endOfDay := startOfDay.Add(24 * time.Hour)
+
+	filter := bson.M{
+		"day": bson.M{
+			"$gte": startOfDay,
+			"$lt":  endOfDay,
+		},
+	}
+
+	var plant Plant
+	err := collection.FindOne(context.TODO(), filter).Decode(&plant)
+	if err == mongo.ErrNoDocuments {
+		return nil, nil // 該当するドキュメントがない場合
+	} else if err != nil {
+		return nil, err
+	}
+
+	return &plant, nil
+}
+
+func (db *Database) GetPlants() ([]Plant, error) {
+	collection := db.client.Database("plants").Collection("plant")
+
 	cursor, err := collection.Find(context.TODO(), bson.D{})
 	if err != nil {
 		return nil, err
 	}
-	defer cursor.Close(context.TODO())
+	defer cursor.Close(context.Background())
 
 	var plants []Plant
-	for cursor.Next(context.TODO()) {
+
+	for cursor.Next(context.Background()) {
 		var plant Plant
 		if err := cursor.Decode(&plant); err != nil {
 			return nil, err
 		}
 		plants = append(plants, plant)
 	}
+
 	return plants, nil
 }
 
