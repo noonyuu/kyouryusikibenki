@@ -132,7 +132,7 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ textData }) => {
 
          const textMesh = new THREE.Mesh(textGeometry, textMaterial);
          textMesh.position.set(
-           Math.random() * 200 - 100,
+           Math.random() * 100 - 100,
            0,
            Math.random() * 200 - 100,
          );
