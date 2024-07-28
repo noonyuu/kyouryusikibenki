@@ -60,7 +60,7 @@ export const Header: React.FC<WordProps> = ({ wordList }) => {
         </span>
         {/* ハンバーガーメニューのマージンと横幅分左にずらす */}
         <span className="mt-3 flex grow -translate-x-11 items-center justify-center font-sans text-5xl text-black">
-          タイトル
+          叫流式便器
         </span>
       </section>
     </header>
