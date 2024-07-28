@@ -74,9 +74,21 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage(message.Text)).Do(); err != nil {
+					if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("https://benki.noonyuu.com/")).Do(); err != nil {
 						log.Print(err)
 						return
+					}
+					switch {
+					case message.Text == "嗚咽さん、お悩み聞いて":
+						replyMessage := linebot.NewTextMessage("マカセロリー")
+						if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
+							log.Print("ReplyMessage Error:", err)
+						}
+					case message.Text == "嗚咽さん、植物見して":
+						replyMessage := linebot.NewTextMessage("https://benki.noonyuu.com/image/get?date=2024-07-28T00:00:00Z")
+						if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
+							log.Print("ReplyMessage Error:", err)
+						}
 					}
 
 					data := map[string]string{
