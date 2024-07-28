@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"fmt"
 
 	"github.com/gorilla/mux"
 	"github.com/noonyuu/benki/back/db"
@@ -46,6 +47,7 @@ func (h *WordListHandler) CreateWordList(w http.ResponseWriter, r *http.Request)
 }
 
 func (h *WordListHandler) GetWordList(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("GetWordList")
 	wordList, err := h.DB.GetWordList()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)

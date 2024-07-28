@@ -2,6 +2,7 @@ package router
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"time"
@@ -17,7 +18,6 @@ type PlantHandler struct {
 func NewPlant(database *db.Database) *mux.Router {
 	handler := &PlantHandler{DB: database}
 	router := mux.NewRouter()
-	// router.HandleFunc("/v1/plant", handler.CreatePlant).Methods("POST")
 	router.HandleFunc("/v1/plant", handler.GetPlant).Methods("GET")
 	router.HandleFunc("/v1/plant/all", handler.GetPlants).Methods("GET")
 	router.HandleFunc("/v1/plant", handler.DeletePlant).Methods("DELETE")
@@ -77,6 +77,7 @@ func (h *PlantHandler) GetPlant(w http.ResponseWriter, r *http.Request) {
 
 // 全件取得
 func (h *PlantHandler) GetPlants(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("GetPlants")
 	plants, err := h.DB.GetPlants()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
