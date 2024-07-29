@@ -1,0 +1,8 @@
+node_modules
+dist
+# Keep environment variables out of version control
+.env
+/minio/data
+.DS_Store
+/uploads
+/.aws

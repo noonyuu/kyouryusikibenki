@@ -13,38 +13,8 @@ export const BottomSheet = () => {
 
   const cardDate: CardDate[] = [
     {
-      day: "2024-07-25",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-24",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-23",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-22",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-21",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-20",
-      image: "/assets/back-image.webp",
-      person: 3,
-    },
-    {
-      day: "2024-07-19",
-      image: "/assets/back-image.webp",
+      day: "2024-07-27",
+      image: "https://benki.noonyuu.com/image/get?date=2024-07-28T00:00:00Z",
       person: 3,
     },
   ];
@@ -91,7 +61,7 @@ export const BottomSheet = () => {
                 <Drawer.Title className="mb-4 text-center text-3xl font-medium">
                   排泄履歴
                 </Drawer.Title>
-                <div className="flex w-full justify-start">
+                <div className="flex w-full justify-start overflow-x-auto">
                   {cardDate.map((card, index) => (
                     <div className="mr-4" key={index}>
                       <Card

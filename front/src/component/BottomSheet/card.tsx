@@ -24,7 +24,8 @@ export const Card: React.FC<CardProps> = ({ day, image, person }) => {
       <div className="text-md flex h-[30%] items-center justify-center pt-2 text-white">
         {mouth}/{date}
       </div>
-      <img src={image} alt="image" className="mx-auto h-[40%]" />
+      {/* <img src={image} alt="image" className="mx-auto h-[40%]" /> */}
+      <img src="/hana.png" alt="image" className="mx-auto h-[40%]" />
       <div className="text-md flex h-[30%] items-center justify-center text-center text-white">
         {person}人
       </div>
