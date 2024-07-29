@@ -74,21 +74,23 @@ func main() {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
 				case *linebot.TextMessage:
-					if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("https://benki.noonyuu.com/")).Do(); err != nil {
-						log.Print(err)
-						return
-					}
+					// if _, err := bot.ReplyMessage(event.ReplyToken, linebot.NewTextMessage("https://benki.noonyuu.com/")).Do(); err != nil {
+					// 	log.Print(err)
+					// 	return
+					// }
 					switch {
 					case message.Text == "嗚咽さん、お悩み聞いて":
-						replyMessage := linebot.NewTextMessage("マカセロリー")
+						replyMessage := linebot.NewTextMessage("マカセロリー!左下のメッセージ入力欄から入力してね！")
 						if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
 							log.Print("ReplyMessage Error:", err)
 						}
+						return
 					case message.Text == "嗚咽さん、植物見して":
-						replyMessage := linebot.NewTextMessage("https://benki.noonyuu.com/image/get?date=2024-07-28T00:00:00Z")
+						replyMessage := linebot.NewTextMessage("https://benki.noonyuu.com/hana.png")
 						if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
 							log.Print("ReplyMessage Error:", err)
 						}
+						return
 					}
 
 					data := map[string]string{
@@ -122,7 +124,10 @@ func main() {
 						log.Fatal(err)
 					}
 					fmt.Printf("%s", b)
-
+					replyMessage := linebot.NewTextMessage("https://benki.noonyuu.com")
+					if _, err := bot.ReplyMessage(event.ReplyToken, replyMessage).Do(); err != nil {
+							log.Print("ReplyMessage Error:", err)
+						}
 				case *linebot.StickerMessage:
 					// スタンプメッセージに対する返信
 					replyMessage := linebot.NewTextMessage("スタンプを送らないで...")
