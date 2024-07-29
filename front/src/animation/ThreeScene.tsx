@@ -10,6 +10,7 @@ interface ThreeSceneProps {
 }
 
 const ThreeScene: React.FC<ThreeSceneProps> = ({ textData }) => {
+  useEffect(() => {}, [textData]);
   console.log("textData", textData);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -108,40 +109,39 @@ const ThreeScene: React.FC<ThreeSceneProps> = ({ textData }) => {
       );
       camera.position.set(30, 30, 100);
 
-     fontLoader.load("Potta One_Regular.json", (loadedFont) => {
-       font = loadedFont;
+      fontLoader.load("Potta One_Regular.json", (loadedFont) => {
+        font = loadedFont;
 
-       textData.forEach((data) => {
-         const textGeometry = new TextGeometry(data.content, {
-           font: font,
-           size: 3,
-           height: 1,
-           curveSegments: 12,
-           bevelEnabled: false,
-         });
+        textData.forEach((data) => {
+          const textGeometry = new TextGeometry(data.content, {
+            font: font,
+            size: 3,
+            height: 1,
+            curveSegments: 12,
+            bevelEnabled: false,
+          });
 
-         const randomColor = new THREE.Color(
-           Math.random(),
-           Math.random(),
-           Math.random(),
-         );
-         const textMaterial = new THREE.MeshStandardMaterial({
-           roughness: 0,
-           color: randomColor,
-         });
+          const randomColor = new THREE.Color(
+            Math.random(),
+            Math.random(),
+            Math.random(),
+          );
+          const textMaterial = new THREE.MeshStandardMaterial({
+            roughness: 0,
+            color: randomColor,
+          });
 
-         const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-         textMesh.position.set(
-           Math.random() * 100 - 100,
-           0,
-           Math.random() * 200 - 100,
-         );
+          const textMesh = new THREE.Mesh(textGeometry, textMaterial);
+          textMesh.position.set(
+            Math.random() * 100 - 100,
+            0,
+            Math.random() * 200 - 100,
+          );
 
-         scene.add(textMesh);
-         texts.push(textMesh);
-       });
-     });
-
+          scene.add(textMesh);
+          texts.push(textMesh);
+        });
+      });
 
       const waterGeometry = new THREE.PlaneGeometry(2048, 2048, 512, 512);
 
