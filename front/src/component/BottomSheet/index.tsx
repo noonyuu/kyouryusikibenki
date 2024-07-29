@@ -14,7 +14,7 @@ export const BottomSheet = () => {
   const cardDate: CardDate[] = [
     {
       day: "2024-07-27",
-      image: "http://localhost:8443/image/get?date=2024-07-28T00:00:00Z",
+      image: "https://benki.noonyuu.com/image/get?date=2024-07-28T00:00:00Z",
       person: 3,
     },
   ];
