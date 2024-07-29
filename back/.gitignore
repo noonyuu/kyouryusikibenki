@@ -1,2 +1,4 @@
 .env
 tmp/
+aws.sh
+/init_data

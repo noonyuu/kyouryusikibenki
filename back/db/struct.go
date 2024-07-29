@@ -27,3 +27,9 @@ type WordRank struct {
 	Day  time.Time `bson:"day"`
 	Rank []string  `bson:"rank"`
 }
+
+type Plant struct {
+	ID       string    `bson:"_id,omitempty"`
+	ImageKey string    `bson:"imageKey"`
+	Day      time.Time `bson:"day"`
+}
