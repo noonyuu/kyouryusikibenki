@@ -49,7 +49,7 @@ export const Header: React.FC<WordProps> = ({ wordList }) => {
             }
           >
             <div className="pt-4 bg-black text-center text-2xl text-white">
-              排泄待ち
+              {/* 排泄待ち */}
             </div>
             <div className="pt-8 h-full overflow-y-auto bg-black text-center text-2xl text-white">
               {wordList.map((word, index) => (
