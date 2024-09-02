@@ -11,9 +11,10 @@ type Database struct {
 }
 
 type WordList struct {
-	ID   string    `bson:"_id,omitempty"`
-	Word string    `bson:"word"`
-	Day  time.Time `bson:"day"`
+	ID       string    `bson:"_id,omitempty"`
+	Word     string    `bson:"word"`
+	Day      time.Time `bson:"day"`
+	DeleteAt time.Time `bson:"deleteAt,omitempty"`
 }
 
 type DaySum struct {
