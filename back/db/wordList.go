@@ -2,10 +2,12 @@ package db
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func (db *Database) CreateWordList(word *WordList) error {
@@ -18,13 +20,16 @@ func (db *Database) GetWordList() ([]WordList, error) {
 	collection := db.client.Database("words").Collection("word-list")
 
 	// 論理削除されていないデータを取得するためのフィルタ
-	filter := bson.D{{"deleteAt", bson.D{{"$exists", false}}}}
+	matchStage := bson.D{{Key: "$match", Value: bson.D{{Key: "deleteAt", Value: bson.D{{Key: "$exists", Value: false}}}}}}
 
-	// FindOptionsで取得件数の制限を設定
-	findOptions := options.Find().SetLimit(20)
+	// ランダムに20件取得するためのサンプルステージ
+	sampleStage := bson.D{{Key: "$sample", Value: bson.D{{Key: "size", Value: 20}}}}
 
-	// フィルタとオプションを使用してデータを取得
-	cursor, err := collection.Find(context.TODO(), filter, findOptions)
+	// アグリゲーションパイプライン
+	pipeline := mongo.Pipeline{matchStage, sampleStage}
+
+	// パイプラインを使ってデータを取得
+	cursor, err := collection.Aggregate(context.TODO(), pipeline)
 	if err != nil {
 		return nil, err
 	}
@@ -48,15 +53,36 @@ func (db *Database) GetWordList() ([]WordList, error) {
 
 // 削除
 func (db *Database) DeleteWordList() error {
-	collection := db.client.Database("words").Collection("word-list")
-	// 現在の日時を取得
-	deleteAt := time.Now()
-	// 論理削除のためのフィルタ
-	filter := bson.D{{"deleteAt", bson.D{{"$exists", false}}}}
+    collection := db.client.Database("words").Collection("word-list")
 
-	update := bson.D{
-		{Key: "$set", Value: bson.D{{"deleteAt", deleteAt}}},
-	}
-	_, err := collection.UpdateMany(context.TODO(), filter, update)
-	return err
+    // 現在の日時を取得してDeleteAtに設定
+    deleteAt := time.Now()
+    update := bson.D{
+        {Key: "$set", Value: bson.D{{Key: "deleteAt", Value: deleteAt}}},
+    }
+
+		// id := "66d5cb0f036921f3c63c7130"
+    
+    // IDをMongoDBのObjectID型に変換
+    // objID, err := primitive.ObjectIDFromHex(id)
+    // if err != nil {
+    //     return err
+    // }
+
+    // 削除のためのフィルタ
+    // filter := bson.D{{Key: "_id", Value: objID}}
+		
+    // 論理削除する対象をフィルタリング（削除済みでないもの）
+    filter := bson.D{{Key: "deleteAt", Value: bson.D{{Key: "$exists", Value: false}}}}
+
+    // ドキュメントを更新して論理削除
+    result, err := collection.UpdateMany(context.TODO(), filter, update)
+    if err != nil {
+        return err
+    }
+
+    // 削除されたドキュメントの数をログに出力
+    log.Printf("Deleted %d documents", result.ModifiedCount)
+
+    return nil
 }
