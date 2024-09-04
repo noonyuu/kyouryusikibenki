@@ -34,3 +34,9 @@ type Plant struct {
 	ImageKey string    `bson:"imageKey"`
 	Day      time.Time `bson:"day"`
 }
+
+type Analysis struct {
+	ID        string    `bson:"_id,omitempty"`
+	Comment   string    `bson:"comment"`
+	CreatedAt time.Time `bson:"createdAt"`
+}

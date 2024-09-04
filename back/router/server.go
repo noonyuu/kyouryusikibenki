@@ -14,9 +14,11 @@ func Server(database *db.Database) {
 	// 各サブルータを作成し、メインルータにマウントします
 	wordListRouter := NewWordList(database)
 	plantRouter := NewPlant(database)
+	analysisRouter := NewAnalysis(database)
 
 	mainRouter.PathPrefix("/v1/word-list").Handler(wordListRouter)
 	mainRouter.PathPrefix("/v1/plant").Handler(plantRouter)
+	mainRouter.PathPrefix("/v1/analysis").Handler(analysisRouter)
 
 	go func() {
 		log.Println("Server is running on port 8080")
@@ -25,4 +27,3 @@ func Server(database *db.Database) {
 		}
 	}()
 }
-
