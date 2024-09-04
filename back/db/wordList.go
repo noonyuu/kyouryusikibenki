@@ -51,6 +51,26 @@ func (db *Database) GetWordList() ([]WordList, error) {
 	return words, nil
 }
 
+// 全件取得
+func (db *Database) GetAllWordList() ([]WordList, error) {
+	collection := db.client.Database("words").Collection("word-list")
+	cursor, err := collection.Find(context.TODO(), bson.D{})
+	if err != nil {
+		return nil, err
+	}
+	defer cursor.Close(context.TODO())
+
+	var words []WordList
+	for cursor.Next(context.TODO()) {
+		var word WordList
+		if err := cursor.Decode(&word); err != nil {
+			return nil, err
+		}
+		words = append(words, word)
+	}
+	return words, nil
+}
+
 // 削除
 func (db *Database) DeleteWordList() error {
     collection := db.client.Database("words").Collection("word-list")

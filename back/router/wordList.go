@@ -19,6 +19,7 @@ func NewWordList(database *db.Database) *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/word-list", handler.CreateWordList).Methods("POST")
 	router.HandleFunc("/v1/word-list", handler.GetWordList).Methods("GET")
+	router.HandleFunc("/v1/word-all-list", handler.GetAllWordList).Methods("GET")
 	router.HandleFunc("/v1/word-list", handler.DeleteWordList).Methods("DELETE")
 
 	return router
@@ -49,6 +50,16 @@ func (h *WordListHandler) CreateWordList(w http.ResponseWriter, r *http.Request)
 func (h *WordListHandler) GetWordList(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("GetWordList")
 	wordList, err := h.DB.GetWordList()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	json.NewEncoder(w).Encode(wordList)
+}
+
+func (h *WordListHandler) GetAllWordList(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("GetWordList")
+	wordList, err := h.DB.GetAllWordList()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
