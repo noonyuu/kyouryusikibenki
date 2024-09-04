@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/noonyuu/benki/back/db"
@@ -35,6 +36,9 @@ func (h *AnalysisHandler) CreateAnalysis(w http.ResponseWriter, r *http.Request)
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	// 現在の日時を設定
+	analysis.CreatedAt = time.Now()
 
 	if err := h.DB.CreateAnalysis(&analysis); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
