@@ -2,9 +2,9 @@ package router
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
-	"fmt"
 
 	"github.com/gorilla/mux"
 	"github.com/noonyuu/benki/back/db"
@@ -18,8 +18,8 @@ func NewWordList(database *db.Database) *mux.Router {
 	handler := &WordListHandler{DB: database}
 	router := mux.NewRouter()
 	router.HandleFunc("/v1/word-list", handler.CreateWordList).Methods("POST")
+	router.HandleFunc("/v1/word-list/all", handler.GetAllWordList).Methods("GET")
 	router.HandleFunc("/v1/word-list", handler.GetWordList).Methods("GET")
-	router.HandleFunc("/v1/word-all-list", handler.GetAllWordList).Methods("GET")
 	router.HandleFunc("/v1/word-list", handler.DeleteWordList).Methods("DELETE")
 
 	return router
