@@ -3,7 +3,7 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-import { Home } from "./page/Home";
+// import { Home } from "./page/Home";
 import { Admin } from "./page/Admin/Admin";
 
 const rootRoute = createRootRoute();
@@ -11,7 +11,7 @@ const rootRoute = createRootRoute();
 const indexRouter = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Home,
+  component: Admin,
 });
 
 const adminRoute = createRoute({
