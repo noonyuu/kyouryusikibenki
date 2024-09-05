@@ -21,7 +21,7 @@ export const PostData = () => {
 
   // jsondata取得
   const GetPoopjson = () => {
-    fetch("https://benki.noonyuu.com/app/v1/word-list")
+    fetch("https://benki.noonyuu.com/app/v1/word-list/all")
       .then((response) => response.json())
       .then((data: PoopData[]) => {
         setPoopData(data); // データを状態にセット
