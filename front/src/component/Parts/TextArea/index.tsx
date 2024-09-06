@@ -17,25 +17,24 @@ type Direction = Left | Right;
 
 type TextAreaProps = {
   description: string;
-  value: string;
-  onChangeHandle: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   direction: Direction;
+  register?: any;
 };
 
 export const TextArea: FC<TextAreaProps> = ({
   description,
-  value,
-  onChangeHandle,
+  // value,
+  // onChangeHandle,
   direction,
+  register,
 }) => {
   return (
     <>
       <textarea
         wrap="hard"
-        className={`w-4/5 resize-none ${direction.prepay} rounded-tl-3xl rounded-tr-3xl border border-black bg-white px-4 py-3 text-black`}
+        className={`w-[80%] resize-none ${direction.prepay} rounded-tl-3xl rounded-tr-3xl border border-black bg-white px-4 py-3 text-black`}
         placeholder={description}
-        value={value}
-        onChange={onChangeHandle}
+        {...register}
       />
     </>
   );

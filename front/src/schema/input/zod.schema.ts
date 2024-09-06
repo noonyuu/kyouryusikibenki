@@ -79,6 +79,7 @@ export const zodSchema = z.object({
     .refine((val) => val === "" || val === "男" || val === "女", {
       message: "男か女かその他選択してください",
     }),
+  userInput: z.string().min(2, { message: "2文字以上入力してください" }),
 });
 
 export type ZodSchemaType = z.infer<typeof zodSchema>;
