@@ -13,7 +13,6 @@ import { Prefecture } from "@/schema/input/zod.schema";
 export const Form = () => {
   const wordList = WordListHook();
   const { register, errors, onSubmit, setValue } = RfhSchema();
-  const [inputValue, setInputValue] = useState<string>("");
   const [prefecture, setPrefecture] = useState<string | undefined>(undefined);
 
   const isPrefecture = (value: string): value is Prefecture => {
@@ -121,7 +120,6 @@ export const Form = () => {
                   <span className="text-red-200">{errors.gender?.message}</span>
                 </div>
               </p>
-              <button type="submit">ここ</button>
             </div>
           </div>
           <div className="relative ml-4 flex w-4/5 justify-start">
@@ -146,10 +144,12 @@ export const Form = () => {
               className="absolute -right-12 top-6 size-12 rounded-full"
             />
           </div>
+          <span className="text-red-200">{errors.userInput?.message}</span>
           <button
             onClick={() => {
               handleButtonClick();
             }}
+            type="submit"
           >
             ボタン
           </button>
