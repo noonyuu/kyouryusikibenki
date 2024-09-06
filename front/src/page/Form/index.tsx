@@ -43,6 +43,7 @@ export const Form = () => {
         }
       } catch (error) {
         console.error("Error fetching prefecture:", error);
+        setValue("prefecture", "");
       }
     };
 
