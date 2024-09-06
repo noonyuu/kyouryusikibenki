@@ -8,7 +8,7 @@
 /* body {
   min-height: 100svh;
   max-width: 100svw;
-  background-image: url(../public/assets/back-image.webp);
+  /* background-image: url(../public/assets/back-image.webp); */
   background-size: cover;
   font-family: "Potta One", system-ui;
   font-weight: 400;

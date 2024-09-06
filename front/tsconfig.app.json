@@ -23,10 +23,10 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "baseUrl": "./",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/schema/input/rfh.schema.ts"]
 }
