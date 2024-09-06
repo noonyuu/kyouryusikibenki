@@ -1,11 +1,11 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Potta+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Potta+One&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Yusei+Magic&display=swap");
 
 @tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
-/* body {
+body {
   min-height: 100svh;
   max-width: 100svw;
   /* background-image: url(../public/assets/back-image.webp); */
@@ -13,11 +13,11 @@
   font-family: "Potta One", system-ui;
   font-weight: 400;
   font-style: normal;
-} */
+}
 
-/* canvas {
+canvas {
   position: fixed;
   top: 0;
   left: 0;
   z-index: -1;
-} */
+}

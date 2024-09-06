@@ -9,15 +9,13 @@ import { Form } from "./page/Form";
 // import { Home } from "./page/Home";
 import { Admin } from "./page/Admin/Admin";
 
-
 const rootRoute = createRootRoute();
 
 const indexRouter = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Admin,
+  component: Home,
 });
-
 
 const formRouter = createRoute({
   getParentRoute: () => rootRoute,
