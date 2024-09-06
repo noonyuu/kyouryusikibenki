@@ -28,5 +28,5 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.d.ts", "src/schema/input/rfh.schema.ts"]
 }
