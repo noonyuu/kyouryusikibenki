@@ -25,7 +25,7 @@ export const PostData = () => {
       .then((response) => response.json())
       .then((data: PoopData[]) => {
         setPoopData(data); // データを状態にセット
-        console.log(data); // データを確認用にコンソールに出力
+        // console.log(data); // データを確認用にコンソールに出力
       })
       .catch((error) => {
         console.error("エラーが発生:", error);

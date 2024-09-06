@@ -155,7 +155,6 @@ export const Form = () => {
           </button>
         </form>
       </main>
-      <BottomSheet />
     </>
   );
 };

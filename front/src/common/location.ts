@@ -10,8 +10,8 @@ export const getPrefecture = async (): Promise<string | undefined> => {
       async (position) => {
         const { latitude, longitude } = position.coords;
 
-        console.log("緯度: ", latitude);
-        console.log("経度: ", longitude);
+        // console.log("緯度: ", latitude);
+        // console.log("経度: ", longitude);
 
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=10&addressdetails=1`;
 

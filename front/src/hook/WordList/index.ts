@@ -22,7 +22,7 @@ export const WordListHook = () => {
       })
       .then((data) => {
         const words = data.map((item: { Word: string }) => item.Word);
-        setFetchedWordList(words);
+        // setFetchedWordList(words);
         console.log("wordList", words);
       })
       .catch((error) => {
