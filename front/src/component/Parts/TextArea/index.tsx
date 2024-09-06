@@ -32,7 +32,7 @@ export const TextArea: FC<TextAreaProps> = ({
     <>
       <textarea
         wrap="hard"
-        className={`w-4/5 resize-none ${direction.prepay} rounded-tl-xl rounded-tr-3xl border border-black bg-white px-4 py-3 text-black`}
+        className={`w-4/5 resize-none ${direction.prepay} rounded-tl-3xl rounded-tr-3xl border border-black bg-white px-4 py-3 text-black`}
         placeholder={description}
         value={value}
         onChange={onChangeHandle}
