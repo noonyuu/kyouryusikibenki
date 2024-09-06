@@ -6,13 +6,18 @@ import {
 import { Home } from "./page/Home";
 import { Form } from "./page/Form";
 
+// import { Home } from "./page/Home";
+import { Admin } from "./page/Admin/Admin";
+
+
 const rootRoute = createRootRoute();
 
 const indexRouter = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
-  component: Home,
+  component: Admin,
 });
+
 
 const formRouter = createRoute({
   getParentRoute: () => rootRoute,
@@ -20,7 +25,13 @@ const formRouter = createRoute({
   component: Form,
 });
 
-const routeTree = rootRoute.addChildren([indexRouter, formRouter]);
+const adminRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/admin",
+  component: Admin,
+});
+
+const routeTree = rootRoute.addChildren([indexRouter, adminRoute, formRouter]);
 
 export const router = createRouter({ routeTree });
 
