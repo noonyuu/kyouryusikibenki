@@ -83,7 +83,7 @@ export const Form = () => {
             <div>
               <p className="flex">
                 <div className="w-16 text-center">年齢</div>
-                <div className="w-32">
+                <div className="w-24">
                   ：
                   <Input
                     register={register("age", { required: true })}

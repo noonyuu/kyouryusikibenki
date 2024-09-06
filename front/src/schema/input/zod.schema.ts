@@ -60,7 +60,7 @@ export const zodSchema = z.object({
     .string()
     .nullable()
     .refine((val) => val === null || val === "" || /^[0-9]+$/.test(val), {
-      message: "年齢は数値である必要があります",
+      message: "それはおかしい",
     })
     .refine(
       (val) =>
@@ -76,9 +76,12 @@ export const zodSchema = z.object({
   gender: z
     .string()
     .nullable()
-    .refine((val) => val === "" || val === "男" || val === "女", {
-      message: "男か女かその他選択してください",
-    }),
+    .refine(
+      (val) => val === "" || val === "男" || val === "女" || val === "その他",
+      {
+        message: "だめでーす",
+      },
+    ),
   userInput: z.string().min(2, { message: "2文字以上入力してください" }),
 });
 
