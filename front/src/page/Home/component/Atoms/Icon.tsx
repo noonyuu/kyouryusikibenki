@@ -11,12 +11,11 @@ export const Icon: FC<IconProps> = ({
   rounded = false,
   size = 32,
 }) => {
-
   return (
     <img
       src={iconPath}
       alt={iconPath}
-      className={`${rounded} size-${size / 4}`}
+      className={`${rounded ? "rounded-full" : null} size-${size / 4}`}
     />
   );
 };
