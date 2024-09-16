@@ -4,7 +4,7 @@ type ButtonProps = {
   text: string;
   bgColor: string;
   textColor: string;
-  onSubmit: () => void;
+  onSubmit?: () => void;
 };
 
 export const Button: FC<ButtonProps> = ({
