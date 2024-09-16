@@ -11,7 +11,7 @@ export const FieldWrapper: FC<FieldWrapperProps> = ({
 }) => {
   return (
     <div
-      className={`${errorMessage ? "border-red-500" : "border-gray-300"} p-2`}
+      className={`w-full ${errorMessage ? "border border-red-500" : null} rounded-md p-2`}
     >
       {children}
       {errorMessage && (
