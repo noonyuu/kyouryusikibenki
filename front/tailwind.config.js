@@ -19,6 +19,15 @@ export default {
       backgroundImage: {
         "main-back": "url('/src/assets/ba')",
       },
+      width: {
+        sm: "640px",
+        md: "768px",
+        lg: "1024px",
+        xl: "1280px",
+      },
+      height: {
+        sm: "112px",
+      },
     },
   },
   plugins: [],
