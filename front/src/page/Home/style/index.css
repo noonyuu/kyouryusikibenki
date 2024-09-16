@@ -1,0 +1,6 @@
+textarea {
+  field-sizing: content;
+  min-width: 150px;
+  max-width: 300px;
+  min-height: min-content;
+}
