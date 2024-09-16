@@ -3,11 +3,10 @@ import {
   createRoute,
   createRouter,
 } from "@tanstack/react-router";
-import { Home } from "./page/Home";
+import { Animation } from "./page/Animation";
 import { Form } from "./page/Form";
-
-// import { Home } from "./page/Home";
 import { Admin } from "./page/Admin/Admin";
+import { Home } from "./page/Home";
 
 const rootRoute = createRootRoute();
 
@@ -15,6 +14,12 @@ const indexRouter = createRoute({
   getParentRoute: () => rootRoute,
   path: "/",
   component: Home,
+});
+
+const animationRouter = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/animation",
+  component: Animation,
 });
 
 const formRouter = createRoute({
@@ -29,7 +34,12 @@ const adminRoute = createRoute({
   component: Admin,
 });
 
-const routeTree = rootRoute.addChildren([indexRouter, adminRoute, formRouter]);
+const routeTree = rootRoute.addChildren([
+  indexRouter,
+  animationRouter,
+  adminRoute,
+  formRouter,
+]);
 
 export const router = createRouter({ routeTree });
 
