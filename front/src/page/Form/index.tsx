@@ -9,6 +9,8 @@ import { Input } from "@/component/Parts/Input/input";
 import { RfhSchema } from "@/schema/input/rfh.schema";
 import { getJapanesePrefectureName } from "@/common/prefecture";
 import { Prefecture } from "@/schema/input/zod.schema";
+import styles from "@/page/Form/turnAnimation.module.css";
+import { loopAnimation } from "@/common/reload";
 
 export const Form = () => {
   const wordList = WordListHook();
@@ -18,6 +20,10 @@ export const Form = () => {
   const isPrefecture = (value: string): value is Prefecture => {
     return prefecture!.includes(value as Prefecture);
   };
+
+  useEffect(() => {
+    loopAnimation("logo", styles.target, 2000);
+  }, []);
 
   useEffect(() => {
     const userInfo = localStorage.getItem("prefecture");
@@ -31,6 +37,7 @@ export const Form = () => {
     const fetchPrefecture = async () => {
       try {
         const prefecture = await getPrefecture();
+        console.log("prefecture: ", prefecture);
         if (prefecture) {
           const japanesePrefecture = getJapanesePrefectureName(prefecture);
           localStorage.setItem("prefecture", japanesePrefecture);
@@ -146,14 +153,22 @@ export const Form = () => {
           </div>
           <span className="text-red-200">{errors.userInput?.message}</span>
           <button
-            onClick={() => {
-              handleButtonClick();
-            }}
+            // onClick={() => {
+            //   handleButtonClick();
+            // }}
             type="submit"
           >
             ボタン
           </button>
         </form>
+        <a href="/">
+          <img
+            id="logo"
+            className={`${styles.target} mx-auto mt-24 size-60`}
+            src={"unk.png"}
+            alt="unko"
+          />
+        </a>
       </main>
     </>
   );
