@@ -10,6 +10,8 @@ export default {
         lightPurple: "#48319D",
         "gradation-s": "#1C1B33",
         "gradation-e": "#2E335A",
+
+        lightBlue: "#1D9BF0",
       },
       fontFamily: {
         sans: ["Potta One", "Yusei Magic"],
