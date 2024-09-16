@@ -12,7 +12,7 @@ export const Textarea: FC<TextareaProps> = forwardRef<
   return (
     <textarea
       placeholder={placeholder}
-      className="w-full resize-none focus:outline-none"
+      className="w-full resize-none focus:outline-none bg-slate-950 text-white text-sm flex items-center"
       rows={1}
       ref={ref}
       {...props}
