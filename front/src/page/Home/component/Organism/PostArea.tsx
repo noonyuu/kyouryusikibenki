@@ -18,14 +18,14 @@ export const PostArea = () => {
   };
   return (
     <form
-      className="min-h-sm w-sm flex flex-col bg-slate-950"
+      className="w-sm min-h-sm box-border flex flex-col bg-slate-950"
       onSubmit={handleSubmit(onSubmits)}
     >
-      <div className="flex space-x-4 px-6 pt-4">
+      <div className="flex w-full space-x-4 px-6 pt-2">
         <Icon iconPath="preview.jpeg" rounded={true} />
         <Form name="textInput" control={control} />
       </div>
-      <div className="flex grow items-end justify-end py-3 pr-4">
+      <div className="flex grow items-end justify-end py-1 pr-4">
         {/* TODO: このボタンの左側の空きスペースに何か入れる */}
         <Button text="流す" bgColor="lightBlue" textColor="white" />
       </div>
