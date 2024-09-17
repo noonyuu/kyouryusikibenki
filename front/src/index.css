@@ -13,6 +13,10 @@ body {
   font-family: "Potta One", system-ui;
   font-weight: 400;
   font-style: normal;
+
+  --sb-track-color: #121212;
+  --sb-thumb-color: #3c3b3b;
+  --sb-size: 14px;
 }
 
 canvas {
@@ -20,4 +24,25 @@ canvas {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 1px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+  border: 4px solid #121212;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }
