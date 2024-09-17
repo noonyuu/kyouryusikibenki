@@ -18,7 +18,7 @@ export const PostArea = () => {
   };
   return (
     <form
-      className="w-sm min-h-sm box-border flex flex-col bg-slate-950"
+      className="w-sm min-h-sm box-border flex flex-col border-b-[0.5px] border-t-[0.5px] border-white bg-slate-950"
       onSubmit={handleSubmit(onSubmits)}
     >
       <div className="flex w-full space-x-4 px-6 pt-2">
