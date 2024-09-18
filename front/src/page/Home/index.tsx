@@ -1,52 +1,36 @@
-import { BottomSheet } from "@/component/BottomSheet";
-import { Header } from "@/component/Header";
-import React, { useEffect, useMemo } from "react";
-import ThreeScene from "@/animation/ThreeScene";
+import { PostArea } from "./component/Organism/PostArea";
+import { PostList } from "./component/Templetes/PostList";
+import { useState } from "react";
+import { Tab } from "./component/Atoms/Tab";
+import { NavMenuList } from "./component/Templetes/NavMenuList";
 
-export const Home: React.FC = () => {
-  const [isFirstRender, setIsFirstRender] = React.useState(false);
-  const [fetchedWordList, setFetchedWordList] = React.useState<string[]>([]);
-
-  useEffect(() => {
-    if (isFirstRender) {
-      return;
-    }
-
-    fetch("https://benki.noonyuu.com/app/v1/word-list", {
-      method: "GET",
-      headers: {
-        key: import.meta.env.VITE_APP_KEY,
-      },
-    })
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return res.json();
-      })
-      .then((data) => {
-        const words = data.map((item: { Word: string }) => item.Word);
-        setFetchedWordList(words);
-        console.log("wordList", words);
-      })
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-    setIsFirstRender(true);
-  }, [isFirstRender]);
-
-  const wordList = useMemo(() => fetchedWordList, [fetchedWordList]);
-  const textData = useMemo(() => {
-    return wordList.map((word) => ({
-      content: word,
-    }));
-  }, [wordList]);
+export const Home = () => {
+  const [tabNum, setTabNum] = useState<number>(0);
+  const tabHandler = (tab: number) => {
+    setTabNum(tab);
+  };
 
   return (
-    <>
-      <Header wordList={wordList} />
-      <ThreeScene textData={textData} />
-      <BottomSheet />
-    </>
-  );
+    <div className="flex h-screen bg-slate-950">
+      <header className="sticky top-0 h-screen w-1/4 border-r-[0.5px] bg-slate-950">
+        <div className="mt-8 text-center text-xl text-white">叫流式便器</div>
+        <NavMenuList />
+      </header>
+
+      <main className="flex grow overflow-y-auto">
+        <div className="relative">
+          <div className="fixed top-0 bg-slate-950">
+            <Tab onChange={tabHandler} />
+          </div>
+          <div className="pt-16">
+            <PostArea />
+            {tabNum === 0 ? <PostList path="/all" /> : <PostList />}
+          </div>
+        </div>
+        <div className="sticky top-0 h-screen grow border-l-[0.5px] bg-slate-950 text-white">
+          
+        </div>
+      </main>
+    </div>
+  )
 };
