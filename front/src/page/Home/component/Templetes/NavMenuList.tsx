@@ -1,10 +1,9 @@
 import { Nav } from '../Atoms/Nav';
 
 const navList = [
-  { icon: "heart.svg", title: "いいね", link: "/admin" },
-  { icon: "poop.svg", title: "お気に入り", link: "/admin" },
-  { icon: "vite.svg", title: "ユーザー", link: "/admin" },
-  { icon: "unk.svg", title: "設定", link: "/admin" },
+  { icon: "home.svg", title: "HOME", link: "/" },
+  { icon: "graph.svg", title: "辞書", link: "/admin" },
+  { icon: "3d.svg", title: "3D", link: "/animation" },
 ];
 
 export const NavMenuList = () => {
