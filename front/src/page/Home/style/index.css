@@ -1,0 +1,25 @@
+textarea {
+  field-sizing: content;
+  min-height: min-content;
+}
+
+.overflow-y-auto::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 1px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 1px;
+  border: 4px solid #121212;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .overflow-y-auto {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}

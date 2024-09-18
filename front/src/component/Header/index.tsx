@@ -9,7 +9,7 @@ export const Header: React.FC<WordProps> = ({ wordList }) => {
 
   const handleMenuOpen = () => {
     setOpenMenu(!openMenu);
-    console.log("wordList", wordList);
+    // console.log("wordList", wordList);
   };
 
   return (
@@ -48,10 +48,10 @@ export const Header: React.FC<WordProps> = ({ wordList }) => {
               openMenu ? "absolute left-0 top-0 z-40 h-full w-full" : "hidden"
             }
           >
-            <div className="pt-4 bg-black text-center text-2xl text-white">
+            <div className="bg-black pt-4 text-center text-2xl text-white">
               {/* 排泄待ち */}
             </div>
-            <div className="pt-8 h-full overflow-y-auto bg-black text-center text-2xl text-white">
+            <div className="h-full overflow-y-auto bg-black pt-8 text-center text-2xl text-white">
               {wordList.map((word, index) => (
                 <div key={index}>{word}</div>
               ))}
@@ -59,7 +59,7 @@ export const Header: React.FC<WordProps> = ({ wordList }) => {
           </nav>
         </span>
         {/* ハンバーガーメニューのマージンと横幅分左にずらす */}
-        <span className="mt-3 flex grow -translate-x-11 items-center justify-center font-sans text-5xl text-black">
+        <span className="mt-3 flex grow -translate-x-11 items-center justify-center font-sans text-5xl text-[#B6863D]">
           叫流式便器
         </span>
       </section>
