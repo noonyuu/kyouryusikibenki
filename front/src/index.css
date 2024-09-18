@@ -13,10 +13,16 @@ body {
   font-family: "Potta One", system-ui;
   font-weight: 400;
   font-style: normal;
+  background-color: #020617 !important;
 
   --sb-track-color: #121212;
   --sb-thumb-color: #3c3b3b;
   --sb-size: 14px;
+}
+
+#root {
+  background-color: #020617 !important;
+  height: 100vh;
 }
 
 canvas {
